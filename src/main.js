@@ -303,8 +303,7 @@ class MiniGraphCard extends LitElement {
         ${this.tooltip.label ? html`
           <span>${this.tooltip.label}</span>
         ` : html`
-          <span>${this.tooltip.time[0]}</span> -
-          <span>${this.tooltip.time[1]}</span>
+          <span>${this.tooltip.time}</span>
         `}
       </div>
     `;
@@ -528,16 +527,17 @@ class MiniGraphCard extends LitElement {
     const now = this.getEndDate();
 
     const oneMinInHours = 1 / 60;
-    now.setMilliseconds(now.getMilliseconds() - getMilli(offset * id + oneMinInHours));
-    const end = getTime(now, format, this._hass.language);
-    now.setMilliseconds(now.getMilliseconds() - getMilli(offset - oneMinInHours));
-    const start = getTime(now, format, this._hass.language);
+    now.setMilliseconds(now.getMilliseconds()
+      - getMilli(offset * id + oneMinInHours)
+      - getMilli(offset - oneMinInHours) / 2.0);
+
+    const time = getTime(now, format, this._hass.language);
 
     this.tooltip = {
       value,
       id,
       entity,
-      time: [start, end],
+      time,
       index,
       label,
     };

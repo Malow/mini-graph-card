@@ -155,7 +155,7 @@ export default (config) => {
     conf.color_thresholds,
     conf.color_thresholds_transition,
   );
-  const additional = conf.hours_to_show > 24 ? { day: 'numeric', weekday: 'short' } : {};
+  const additional = conf.hours_to_show > 24 ? { day: 'numeric', weekday: 'long', month: 'long' } : {};
   const hourFormat = conf.hour24 ? { hourCycle: 'h23' } : { hour12: true };
   conf.format = { ...hourFormat, ...additional };
 
